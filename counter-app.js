@@ -21,7 +21,8 @@ export class CounterApp extends DDDSuper(I18NMixin(LitElement)) {
   constructor() {
       super();
       this.count = 0;
-
+      this.min = -15;
+      this.max = 30;
 
       this.t = this.t || {};
       this.t = {
@@ -40,7 +41,6 @@ export class CounterApp extends DDDSuper(I18NMixin(LitElement)) {
     static get properties() {
       return {
         ...super.properties,
-        
         count: { type: Number},
         min: {type: Number, reflect: true},
         max: {type: Number, reflect: true},
@@ -62,9 +62,6 @@ export class CounterApp extends DDDSuper(I18NMixin(LitElement)) {
           background-color: var(--ddd-theme-accent);
           font-family: var(--ddd-font-navigation);
         }
-        :host([count="10"]) {
-          color: var(--ddd-theme-default-athertonViolet);
-        }
         .wrapper {
           margin: var(--ddd-spacing-2);
           padding: var(--ddd-spacing-4);
@@ -78,7 +75,7 @@ export class CounterApp extends DDDSuper(I18NMixin(LitElement)) {
     // Lit render the HTML
       render() {
         return html`
-      <confetti-container id="confetti"></confetti-container>
+      <confetti-container id="confetti">
       <div class="counter">${this.count}</div>
       <div class ="button">
         <button @click="${this.decrease}" ?disabled="${this.min === this.count}">-1</button>
