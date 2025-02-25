@@ -19,58 +19,61 @@ export class CounterApp extends DDDSuper(I18NMixin(LitElement)) {
   }
 
   constructor() {
-    super();
-    this.title = "";
-    this.t = this.t || {};
-    this.t = {
-      ...this.t,
-      title: "Title",
-    };
-    this.registerLocalization({
-      context: this,
-      localesPath:
-        new URL("./locales/counter-app.ar.json", import.meta.url).href +
-        "/../",
-      locales: ["ar", "es", "hi", "zh"],
-    });
-  }
+      super();
+      this.count = 0;
 
-  // Lit reactive properties
-  static get properties() {
-    return {
-      ...super.properties,
-      title: { type: String },
-    };
-  }
 
-  // Lit scoped styles
-  static get styles() {
-    return [super.styles,
-    css`
-      :host {
-        display: block;
-        color: var(--ddd-theme-primary);
-        background-color: var(--ddd-theme-accent);
-        font-family: var(--ddd-font-navigation);
+      this.t = this.t || {};
+      this.t = {
+        ...this.t,
+        title: "Title",
+      };
+      this.registerLocalization({
+        context: this,
+        localesPath:
+          new URL("./locales/counter-app.ar.json", import.meta.url).href +
+          "/../",
+        locales: ["ar", "es", "hi", "zh"],
+      });
+    }
+      // Lit reactive properties
+    static get properties() {
+      return {
+        ...super.properties,
+        
+        count: { type: Number},
+      };
+    }
+      // Lit scoped styles
+    static get styles() {
+      return [super.styles,
+      css`
+        :host {
+          display: block;
+          color: var(--ddd-theme-primary);
+          background-color: var(--ddd-theme-accent);
+          font-family: var(--ddd-font-navigation);
+        }
+        .wrapper {
+          margin: var(--ddd-spacing-2);
+          padding: var(--ddd-spacing-4);
+        }
+        .counter {
+          font-size: var(--counter-app-label-font-size, var(--ddd-font-size-xxl));
+        }
+      `];
+    }
+    // Lit render the HTML
+      render() {
+        return html`
+      <div class="wrapper">
+      <div class="counter">{this.count}</div>
+      <div class ="button">
+        <button>-1</button>
+        <button>+1</button>
+      </div>
+    </div>`;
       }
-      .wrapper {
-        margin: var(--ddd-spacing-2);
-        padding: var(--ddd-spacing-4);
-      }
-      h3 span {
-        font-size: var(--counter-app-label-font-size, var(--ddd-font-size-s));
-      }
-    `];
-  }
-
-  // Lit render the HTML
-  render() {
-    return html`
-<div class="wrapper">
-  <h3><span>${this.t.title}:</span> ${this.title}</h3>
-  <slot></slot>
-</div>`;
-  }
 
   /**
    * haxProperties integration via file reference
